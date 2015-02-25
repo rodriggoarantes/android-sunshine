@@ -2,18 +2,25 @@
 <items version="2" >
 
     <item
+        jar="/home/rodrigo/Desenvolvimento/work.androidstudio/Sunshine/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/home/rodrigo/Desenvolvimento/work.androidstudio/Sunshine/app/build/intermediates/pre-dexed/debug/classes-ed65eeccf7fa7b6c8181a904a16aaf44653b1f62.jar" />
+    </item>
+    <item
+        jar="/home/rodrigo/Desenvolvimento/work.androidstudio/Sunshine/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/home/rodrigo/Desenvolvimento/work.androidstudio/Sunshine/app/build/intermediates/pre-dexed/debug/classes-8bfc8dc177347660e9f1fe56451b270a3e70e26f.jar" />
+    </item>
+    <item
         jar="/home/rodrigo/AndroidStudioProjects/Sunshine/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
         <dex dex="/home/rodrigo/AndroidStudioProjects/Sunshine/app/build/intermediates/pre-dexed/debug/classes-5a10b84d19877bef330d0adb07840f321e979b20.jar" />
-    </item>
-    <item
-        jar="/home/rodrigo/AndroidStudioProjects/Sunshine/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.1"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/home/rodrigo/AndroidStudioProjects/Sunshine/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-9054e6c1e18ccb177bca38f9f6d7e069cbb435e4.jar" />
     </item>
     <item
         jar="/home/rodrigo/Desenvolvimento/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
@@ -23,11 +30,25 @@
         <dex dex="/home/rodrigo/AndroidStudioProjects/Sunshine/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-e3fe8621e6c4c5d295819c92fd1ee2fd72e9cc88.jar" />
     </item>
     <item
+        jar="/home/rodrigo/AndroidStudioProjects/Sunshine/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/home/rodrigo/AndroidStudioProjects/Sunshine/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-9054e6c1e18ccb177bca38f9f6d7e069cbb435e4.jar" />
+    </item>
+    <item
         jar="/home/rodrigo/AndroidStudioProjects/Sunshine/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
         <dex dex="/home/rodrigo/AndroidStudioProjects/Sunshine/app/build/intermediates/pre-dexed/debug/classes-0c16183beda9ffaa30bc2379c2d49b75f112c9fe.jar" />
+    </item>
+    <item
+        jar="/home/rodrigo/Desenvolvimento/work.androidstudio/Sunshine/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/home/rodrigo/Desenvolvimento/work.androidstudio/Sunshine/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-aae14bf69416588435c17542105493537f4bbf95.jar" />
     </item>
 
 </items>
