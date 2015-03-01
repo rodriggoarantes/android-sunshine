@@ -4,4 +4,4 @@
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:id="@+id/list_item_forecast_textview" />
-<!-- From: file:/home/rodrigo/AndroidStudioProjects/Sunshine/app/src/main/res/layout/list_item_forecast.xml -->
+<!-- From: file:/home/rodrigo/Desenvolvimento/work.androidstudio/Sunshine/app/src/main/res/layout/list_item_forecast.xml -->

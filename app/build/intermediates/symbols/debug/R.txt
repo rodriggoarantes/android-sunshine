@@ -346,7 +346,8 @@ int id action_menu_presenter 0x7f090003
 int id action_mode_bar 0x7f09002e
 int id action_mode_bar_stub 0x7f09002d
 int id action_mode_close_button 0x7f090020
-int id action_settings 0x7f090042
+int id action_refresh 0x7f090042
+int id action_settings 0x7f090043
 int id activity_chooser_view_content 0x7f090021
 int id always 0x7f090016
 int id beginning 0x7f090013
@@ -428,7 +429,8 @@ int layout activity_main 0x7f040017
 int layout fragment_main 0x7f040018
 int layout list_item_forecast 0x7f040019
 int layout support_simple_spinner_dropdown_item 0x7f04001a
-int menu main 0x7f0d0000
+int menu forecastfragment 0x7f0d0000
+int menu main 0x7f0d0001
 int mipmap ic_launcher 0x7f030000
 int string abc_action_bar_home_description 0x7f0b0000
 int string abc_action_bar_home_description_format 0x7f0b0001
@@ -446,9 +448,10 @@ int string abc_searchview_description_voice 0x7f0b000c
 int string abc_shareactionprovider_share_with 0x7f0b000d
 int string abc_shareactionprovider_share_with_application 0x7f0b000e
 int string abc_toolbar_collapse_description 0x7f0b000f
-int string action_settings 0x7f0b0010
-int string app_name 0x7f0b0011
-int string hello_world 0x7f0b0012
+int string action_refresh 0x7f0b0010
+int string action_settings 0x7f0b0011
+int string app_name 0x7f0b0012
+int string hello_world 0x7f0b0013
 int style AppTheme 0x7f0c0000
 int style Base_TextAppearance_AppCompat 0x7f0c0001
 int style Base_TextAppearance_AppCompat_Body1 0x7f0c0002
