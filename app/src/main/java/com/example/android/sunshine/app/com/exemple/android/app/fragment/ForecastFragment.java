@@ -12,8 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.android.sunshine.app.R;
 
@@ -90,6 +92,15 @@ public class ForecastFragment extends Fragment {
         Log.v(LOG_TAG, "FetchWeatherTask>execlute>FirstTIME");
         FetchWeatherTask f = new FetchWeatherTask();
         f.execute("74912260");
+
+        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast t = new Toast(getActivity());
+                String tempo = adap.getItem(position);
+                t.setText(tempo);
+            }
+        });
 
         return rootView;
     }
