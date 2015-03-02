@@ -1,5 +1,6 @@
-package com.example.android.sunshine.app.com.exemple.android.app.fragment;
+package com.example.android.sunshine.app.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.android.sunshine.app.R;
+import com.example.android.sunshine.app.activity.DetailActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +42,7 @@ public class ForecastFragment extends Fragment {
 
     private final String LOG_TAG = ForecastFragment.class.getSimpleName();
     private ArrayList<String> forecast = new ArrayList<String>(0);
-    private ArrayAdapter<String> adap;
+    private ArrayAdapter<String> adapter;
 
     public ForecastFragment() {}
 
@@ -81,26 +83,29 @@ public class ForecastFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         //Cria o adapter usando o layout de lista list_item_forecast, passando a lista como parametro
-        adap = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview, forecast);
 
         //Obtem a View da lista ListView e insere o adapter criado
         ListView lw = (ListView) rootView.findViewById(R.id.listview_forecast);
-        lw.setAdapter(adap);
+        lw.setAdapter(adapter);
+        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String tempo = adapter.getItem(position);
+                Toast.makeText(getActivity(), "DetailActivity", Toast.LENGTH_SHORT).show();
+
+                //Tela de detalhes da previsao do tempo
+                Intent i = new Intent(getActivity(), DetailActivity.class);
+                i.putExtra(Intent.EXTRA_TEXT, tempo);
+                startActivity(i);
+            }
+        });
 
         //Obtem os dados a primeira vez quer cria o fragmento
         Log.v(LOG_TAG, "FetchWeatherTask>execlute>FirstTIME");
         FetchWeatherTask f = new FetchWeatherTask();
         f.execute("74912260");
-
-        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast t = new Toast(getActivity());
-                String tempo = adap.getItem(position);
-                t.setText(tempo);
-            }
-        });
 
         return rootView;
     }
@@ -306,10 +311,10 @@ public class ForecastFragment extends Fragment {
         @Override
         protected void onPostExecute(String[] strings) {
             if (strings != null) {
-                adap.clear();
+                adapter.clear();
                 forecast = new ArrayList<String>(Arrays.asList(strings));
-                adap.addAll(forecast);
-                adap.notifyDataSetChanged();
+                adapter.addAll(forecast);
+                adapter.notifyDataSetChanged();
             }
         }
     }

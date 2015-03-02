@@ -1,11 +1,13 @@
-package com.example.android.sunshine.app;
+package com.example.android.sunshine.app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.android.sunshine.app.com.exemple.android.app.fragment.ForecastFragment;
+import com.example.android.sunshine.app.R;
+import com.example.android.sunshine.app.fragment.ForecastFragment;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -43,6 +45,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
             return true;
         }
 
