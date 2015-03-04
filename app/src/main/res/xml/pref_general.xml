@@ -1,33 +1,22 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
-        android:key="example_checkbox"
-        android:title="@string/pref_title_social_recommendations"
-        android:summary="@string/pref_description_social_recommendations"
-        android:defaultValue="true" />
-
-    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
-        android:key="example_text"
-        android:title="@string/pref_title_display_name"
-        android:defaultValue="@string/pref_default_display_name"
-        android:selectAllOnFocus="true"
-        android:inputType="textCapWords"
-        android:capitalize="words"
-        android:singleLine="true"
-        android:maxLines="1" />
+        android:key="@string/settings_location_key"
+        android:title="@string/settings_location_label"
+        android:defaultValue="@string/settings_location_default"
+        android:inputType="text"
+        android:singleLine="true" />
 
-    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-         dismiss it. -->
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+
     <ListPreference
-        android:key="example_list"
-        android:title="@string/pref_title_add_friends_to_messages"
-        android:defaultValue="-1"
-        android:entries="@array/pref_example_list_titles"
-        android:entryValues="@array/pref_example_list_values"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null" />
+        android:title="@string/settings_temperature_label"
+        android:key="@string/settings_temperature_key"
+        android:summary="@string/settings_temperature_summary"
+        android:dialogTitle="@string/settings_temperature_label"
+        android:entries="@array/settings_temperatures_temp_labels"
+        android:entryValues="@array/settings_temperatures_temp_values"
+        android:defaultValue="@string/settings_temperatures_temp_default"
+         />
+
 
 </PreferenceScreen>

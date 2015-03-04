@@ -21,6 +21,8 @@ public final class R {
         public static final int pref_example_list_values=0x7f070001;
         public static final int pref_sync_frequency_titles=0x7f070002;
         public static final int pref_sync_frequency_values=0x7f070003;
+        public static final int settings_temperatures_temp_labels=0x7f070004;
+        public static final int settings_temperatures_temp_values=0x7f070005;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -1453,8 +1455,17 @@ containing a value of this type.
         public static final int pref_title_sync_frequency=0x7f0d001f;
         public static final int pref_title_system_sync_settings=0x7f0d0020;
         public static final int pref_title_vibrate=0x7f0d0021;
-        public static final int title_activity_detail=0x7f0d0022;
-        public static final int title_activity_settings=0x7f0d0023;
+        public static final int settings_location_default=0x7f0d0022;
+        public static final int settings_location_key=0x7f0d0023;
+        public static final int settings_location_label=0x7f0d0024;
+        public static final int settings_temperature_key=0x7f0d0025;
+        public static final int settings_temperature_label=0x7f0d0026;
+        public static final int settings_temperature_summary=0x7f0d0027;
+        public static final int settings_temperatures_temp_default=0x7f0d0028;
+        public static final int settings_temperatures_temp_imperial=0x7f0d0029;
+        public static final int settings_temperatures_temp_metric=0x7f0d002a;
+        public static final int title_activity_detail=0x7f0d002b;
+        public static final int title_activity_settings=0x7f0d002c;
     }
     public static final class style {
         /**  Customize your theme here. 

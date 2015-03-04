@@ -1,9 +1,11 @@
 package com.example.android.sunshine.app.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -61,6 +63,7 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -69,13 +72,13 @@ public class ForecastFragment extends Fragment {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
             Log.v(LOG_TAG, "onOptionsItemSelected:R.id.action_refresh");
-            FetchWeatherTask f = new FetchWeatherTask();
-            f.execute("74912260");
+            this.updateWeather();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,12 +105,27 @@ public class ForecastFragment extends Fragment {
             }
         });
 
-        //Obtem os dados a primeira vez quer cria o fragmento
-        Log.v(LOG_TAG, "FetchWeatherTask>execlute>FirstTIME");
-        FetchWeatherTask f = new FetchWeatherTask();
-        f.execute("74912260");
-
         return rootView;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Chama o metodo para atualizar os dados
+        this.updateWeather();
+    }
+
+    /**
+     * Metodo utilizado para atualizar os dados do clima, executando ao criar um novo fragmento
+     * @author rodrigo.arantes 20150303
+     */
+    private void updateWeather() {
+        Log.v(LOG_TAG, "updateWeather()");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = prefs.getString(getString(R.string.settings_location_key), getString(R.string.settings_location_default));
+        FetchWeatherTask f = new FetchWeatherTask();
+        f.execute(location);
     }
 
 
@@ -135,6 +153,18 @@ public class ForecastFragment extends Fragment {
          * Prepare the weather high/lows for presentation.
          */
         private String formatHighLows(double high, double low) {
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String unitType = prefs.getString(getString(R.string.settings_temperature_key),
+                                                getString(R.string.settings_temperatures_temp_default));
+
+            if (getString(R.string.settings_temperatures_temp_imperial).equals(unitType)) {
+                high = (high * 1.8) + 32;
+                low = (low * 1.8) + 32;
+            } else if (!getString(R.string.settings_temperatures_temp_metric).equals(unitType)) {
+                Log.e(LOG_TAG, "Unidade de medida não encontrada!");
+            }
+
             // For presentation, assume the user doesn't care about tenths of a degree.
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
