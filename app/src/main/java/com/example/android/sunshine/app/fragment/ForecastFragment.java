@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.android.sunshine.app.R;
 import com.example.android.sunshine.app.activity.DetailActivity;
@@ -96,11 +95,12 @@ public class ForecastFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String tempo = adapter.getItem(position);
-                Toast.makeText(getActivity(), "DetailActivity", Toast.LENGTH_SHORT).show();
 
                 //Tela de detalhes da previsao do tempo
                 Intent i = new Intent(getActivity(), DetailActivity.class);
                 i.putExtra(Intent.EXTRA_TEXT, tempo);
+
+                Log.d(LOG_TAG, "Start DetailActivity");
                 startActivity(i);
             }
         });

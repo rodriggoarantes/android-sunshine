@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.android.sunshine.app.R;
+import com.example.android.sunshine.app.fragment.DetailFragment;
 
 public class DetailActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
@@ -22,24 +23,14 @@ public class DetailActivity extends ActionBarActivity {
         ab.setDisplayUseLogoEnabled(true);
         ab.setDisplayShowHomeEnabled(true);
 
-
-        // Create the text view
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(Intent.EXTRA_TEXT);
-        TextView textView = new TextView(this);
-        textView.setTextSize(20);
-        textView.setText(message);
-
-        // Set the text view as the activity layout
-        //setContentView(R.layout.activity_detail);
-        setContentView(textView);
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.container, new DetailFragment()).commit();
+        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        getMenuInflater().inflate(R.menu.detail, menu);
         return true;
     }
 
