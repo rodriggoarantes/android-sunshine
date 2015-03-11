@@ -70,7 +70,9 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
         sqlLocation.append(LocationEntry.COLUMN_COORD_LONG).append(" REAL NOT NULL ");
         sqlLocation.append(" ); ");
 
+        //Cria a tabela weather
         sqLiteDatabase.execSQL(sqlWeather.toString());
+        //Cria a tabela location
         sqLiteDatabase.execSQL(sqlLocation.toString());
     }
 
