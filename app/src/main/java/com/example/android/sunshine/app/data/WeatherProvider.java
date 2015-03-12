@@ -240,9 +240,20 @@ public class WeatherProvider extends ContentProvider {
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
+            case LOCATION: {
+                normalizeDate(values);
+                long _id = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, values);
+                if ( _id > 0 )
+                    returnUri = WeatherContract.LocationEntry.buildLocationUri(_id);
+                else
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
+
+        //Notifica o content provider que houve mudanças nos dados
         getContext().getContentResolver().notifyChange(uri, null);
         return returnUri;
     }
@@ -250,17 +261,35 @@ public class WeatherProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         // Student: Start by getting a writable database
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int deletedRows = 0;
 
+        if ( null == selection ) {
+            selection = "1";
+        }
         // Student: Use the uriMatcher to match the WEATHER and LOCATION URI's we are going to
         // handle.  If it doesn't match these, throw an UnsupportedOperationException.
+        switch (match) {
+            case WEATHER: {
+                deletedRows = db.delete(WeatherContract.WeatherEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            }
+            case LOCATION: {
+                deletedRows = db.delete(WeatherContract.LocationEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
 
-        // Student: A null value deletes all rows.  In my implementation of this, I only notified
-        // the uri listeners (using the content resolver) if the rowsDeleted != 0 or the selection
-        // is null.
-        // Oh, and you should notify the listeners here.
 
-        // Student: return the actual rows deleted
-        return 0;
+        //Notifica o content provider que houve mudanças nos dados
+        if (deletedRows > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return deletedRows;
     }
 
     private void normalizeDate(ContentValues values) {
@@ -272,11 +301,35 @@ public class WeatherProvider extends ContentProvider {
     }
 
     @Override
-    public int update(
-            Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        // Student: This is a lot like the delete function.  We return the number of rows impacted
-        // by the update.
-        return 0;
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        // Student: Start by getting a writable database
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        Uri returnUri;
+        int updateRows = 0;
+
+        // Student: Use the uriMatcher to match the WEATHER and LOCATION URI's we are going to
+        // handle.  If it doesn't match these, throw an UnsupportedOperationException.
+        switch (match) {
+            case WEATHER: {
+                normalizeDate(values);
+                updateRows = db.update(WeatherContract.WeatherEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            }
+            case LOCATION: {
+                normalizeDate(values);
+                updateRows = db.update(WeatherContract.LocationEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            }
+            default: throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+
+        //Notifica o content provider que houve mudanças nos dados
+        if (updateRows > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return updateRows;
     }
 
     @Override
