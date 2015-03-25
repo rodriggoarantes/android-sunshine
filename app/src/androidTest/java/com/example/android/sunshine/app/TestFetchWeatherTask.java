@@ -40,13 +40,11 @@ public class TestFetchWeatherTask extends AndroidTestCase{
                 WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ?",
                 new String[]{ADD_LOCATION_SETTING});
 
-        FetchWeatherTask fwt = new FetchWeatherTask(getContext(), null);
-        long locationId = fwt.addLocation(ADD_LOCATION_SETTING, ADD_LOCATION_CITY,
-                ADD_LOCATION_LAT, ADD_LOCATION_LON);
+        FetchWeatherTask fwt = new FetchWeatherTask(getContext());
+        long locationId = fwt.addLocation(ADD_LOCATION_SETTING, ADD_LOCATION_CITY, ADD_LOCATION_LAT, ADD_LOCATION_LON);
 
         // does addLocation return a valid record ID?
-        assertFalse("Error: addLocation returned an invalid ID on insert",
-                locationId == -1);
+        assertFalse("Error: addLocation returned an invalid ID on insert", locationId == -1);
 
         // test all this twice
         for ( int i = 0; i < 2; i++ ) {

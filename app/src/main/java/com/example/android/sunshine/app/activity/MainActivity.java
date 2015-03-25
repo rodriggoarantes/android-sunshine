@@ -11,12 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.android.sunshine.app.R;
+import com.example.android.sunshine.app.Utility;
 import com.example.android.sunshine.app.fragment.ForecastFragment;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String FORECASTFRAGMENT_TAG = "forecastfragment";
+
+    private String mLocation = "";
 
     @Override
     protected void onStart() {
@@ -38,8 +42,16 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        Log.d(LOG_TAG, "onResume");
         super.onResume();
+        String location = Utility.getPreferredLocation(this);
+        // update the location in our second pane using the fragment manager
+        if (location != null && !location.equals(mLocation)) {
+            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
+            if ( null != ff ) {
+                ff.onLocationChanged();
+            }
+            mLocation = location;
+        }
     }
 
     @Override
@@ -60,8 +72,15 @@ public class MainActivity extends ActionBarActivity {
         ab.setDisplayUseLogoEnabled(true);
         ab.setDisplayShowHomeEnabled(true);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mLocation = prefs.getString(
+                getString(R.string.settings_location_key),
+                getString(R.string.settings_location_default));
+
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, new ForecastFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(
+                                                        R.id.container, new ForecastFragment(), FORECASTFRAGMENT_TAG)
+                    .commit();
         }
     }
 
@@ -95,14 +114,10 @@ public class MainActivity extends ActionBarActivity {
      * aplicativo de mapas do celular
      */
     private void openPreferredLocationInMap() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String location = prefs.getString(
-                                getString(R.string.settings_location_key),
-                                    getString(R.string.settings_location_default));
 
         Uri geoLocation = Uri.parse("geo:0,0?")
                             .buildUpon()
-                            .appendQueryParameter("q", location)
+                            .appendQueryParameter("q", mLocation)
                             .build();
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -111,7 +126,7 @@ public class MainActivity extends ActionBarActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         } else {
-            Log.d(LOG_TAG, "Não foi possivel abrir a localização: " + location);
+            Log.d(LOG_TAG, "Não foi possivel abrir a localização: " + mLocation);
         }
     }
 }
