@@ -15,6 +15,7 @@ public class DetailActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_detail);
 
         //Alteraçoes na action bar para apresentar o icone do aplicativo
@@ -24,7 +25,9 @@ public class DetailActivity extends ActionBarActivity {
         ab.setDisplayShowHomeEnabled(true);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, new DetailFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.weather_detail_container, new DetailFragment())
+                    .commit();
         }
     }
 

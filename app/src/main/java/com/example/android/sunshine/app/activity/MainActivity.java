@@ -1,10 +1,8 @@
 package com.example.android.sunshine.app.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -12,13 +10,16 @@ import android.view.MenuItem;
 
 import com.example.android.sunshine.app.R;
 import com.example.android.sunshine.app.Utility;
+import com.example.android.sunshine.app.fragment.DetailFragment;
 import com.example.android.sunshine.app.fragment.ForecastFragment;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements ForecastFragment.Callback {
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
-    private static final String FORECASTFRAGMENT_TAG = "forecastfragment";
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
+
+    private boolean mTwoPane = false;
 
     private String mLocation = "";
 
@@ -46,9 +47,14 @@ public class MainActivity extends ActionBarActivity {
         String location = Utility.getPreferredLocation(this);
         // update the location in our second pane using the fragment manager
         if (location != null && !location.equals(mLocation)) {
-            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
+            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_forecast);
             if ( null != ff ) {
                 ff.onLocationChanged();
+            }
+
+            DetailFragment df = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+            if ( null != df ) {
+                df.onLocationChanged(location);
             }
             mLocation = location;
         }
@@ -62,25 +68,34 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Log.d(LOG_TAG, "onCreate");
 
-        setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
 
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setLogo(R.mipmap.ic_launcher);
         ab.setDisplayUseLogoEnabled(true);
         ab.setDisplayShowHomeEnabled(true);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        mLocation = prefs.getString(
-                getString(R.string.settings_location_key),
-                getString(R.string.settings_location_default));
+        mLocation = Utility.getPreferredLocation(this);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(
-                                                        R.id.container, new ForecastFragment(), FORECASTFRAGMENT_TAG)
-                    .commit();
+        setContentView(R.layout.activity_main);
+
+        if (findViewById(R.id.weather_detail_container) != null) {
+            // The detail container view will be present only in the large-screen layouts
+            // (res/layout-sw600dp). If this view is present, then the activity should be
+            // in two-pane mode.
+            mTwoPane = true;
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.weather_detail_container, new DetailFragment(), DETAILFRAGMENT_TAG)
+                        .commit();
+            }
+        } else {
+            mTwoPane = false;
         }
     }
 
@@ -109,24 +124,24 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    /**
-     * Metodo utilizado para abrir a localização de preferencia do usuario no
-     * aplicativo de mapas do celular
-     */
-    private void openPreferredLocationInMap() {
+    @Override
+    public void onItemSelected(Uri contentUri) {
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI, contentUri);
 
-        Uri geoLocation = Uri.parse("geo:0,0?")
-                            .buildUpon()
-                            .appendQueryParameter("q", mLocation)
-                            .build();
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(args);
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(geoLocation);
-        //Activity somente é iniciada se a inteção é resolvida, conforme documentação
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.weather_detail_container, fragment, DETAILFRAGMENT_TAG)
+                    .commit();
         } else {
-            Log.d(LOG_TAG, "Não foi possivel abrir a localização: " + mLocation);
+            Intent intent = new Intent(this, DetailActivity.class).setData(contentUri);
+            startActivity(intent);
         }
     }
 }

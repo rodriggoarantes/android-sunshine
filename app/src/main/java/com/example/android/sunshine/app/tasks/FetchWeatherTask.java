@@ -278,7 +278,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
             // Read the input stream into a String
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuffer buffer = new StringBuffer("");
             if (inputStream == null) {
                 // Nothing to do.
                 return null;

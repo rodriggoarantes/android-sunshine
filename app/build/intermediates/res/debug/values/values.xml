@@ -205,7 +205,11 @@
     <string name="action_share">Share</string>
     <string name="app_name">Sunshine</string>
     <string name="format_full_friendly_date"><ns1:g id="day">%1$s</ns1:g>, <ns1:g id="date">%2$s</ns1:g></string>
+    <string name="format_humidity">Humidity: <ns1:g id="humidity">%1.0f</ns1:g> %%</string>
+    <string name="format_pressure">Pressure: <ns1:g id="pressure">%1.0f</ns1:g> hPa</string>
     <string name="format_temperature"><ns1:g id="temp">%1.0f</ns1:g>\u00B0</string>
+    <string name="format_wind_kmh">Wind: <ns1:g id="speed">%1$1.0f</ns1:g> km/h <ns1:g id="direction">%2$s</ns1:g></string>
+    <string name="format_wind_mph">Wind: <ns1:g id="speed">%1$1.0f</ns1:g> mph <ns1:g id="direction">%2$s</ns1:g></string>
     <string name="hello_world">Hello world!</string>
     <!-- From: file:/home/rodrigo/Desenvolvimento/work.androidstudio/Sunshine/app/src/main/res/values/strings_activity_settings.xml -->
     <eat-comment/>

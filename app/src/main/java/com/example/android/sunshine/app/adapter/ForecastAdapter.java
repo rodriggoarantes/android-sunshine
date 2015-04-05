@@ -19,6 +19,8 @@ import com.example.android.sunshine.app.fragment.ForecastFragment;
  */
 public class ForecastAdapter extends CursorAdapter {
 
+    private static final String LOG_TAG = ForecastAdapter.class.getSimpleName();
+
     private static final int VIEW_TYPE_TODAY = 0;
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
     private static final int VIEW_TYPE_COUNT = 2;
@@ -72,10 +74,20 @@ public class ForecastAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         // Read weather icon ID from cursor
-        int weatherId = cursor.getInt(ForecastFragment.COL_WEATHER_ID);
+        int weatherId = cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID);
 
         // Use placeholder image for now
-        viewHolder.iconView.setImageResource(R.mipmap.ic_launcher);
+        int viewType = getItemViewType(cursor.getPosition());
+        int resourceIdIcon = 0;
+        if (viewType == VIEW_TYPE_TODAY) {
+            //Art Colors
+            resourceIdIcon = Utility.getArtResourceForWeatherCondition(weatherId);
+        } else {
+            //BlackAndWhite
+            resourceIdIcon = Utility.getIconResourceForWeatherCondition(weatherId);
+        }
+
+        viewHolder.iconView.setImageResource(resourceIdIcon);
 
         // Read date from cursor
         long dateInMilis = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
