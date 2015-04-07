@@ -97,6 +97,12 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
         } else {
             mTwoPane = false;
         }
+
+        //Obter o fragmento para setar se o fragmento é de dois paineis ou somente um
+        ForecastFragment forecastFrag = ((ForecastFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_forecast));
+        //Apenas o unico painel possui today layout
+        forecastFrag.setUseTodayLayout(!mTwoPane);
+
     }
 
 

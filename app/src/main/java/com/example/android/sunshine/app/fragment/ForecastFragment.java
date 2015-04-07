@@ -35,6 +35,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     private static final String LOG_TAG = ForecastFragment.class.getSimpleName();
     private ArrayList<String> forecast = new ArrayList<String>(0);
+    private ListView mListView;
     private ForecastAdapter adapter;
 
     private static final int FORECAST_LOADER = 0;
@@ -67,6 +68,11 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     public static final int COL_WEATHER_CONDITION_ID = 6;
     public static final int COL_COORD_LAT = 7;
     public static final int COL_COORD_LONG = 8;
+
+    private int mPositionSelected = ListView.INVALID_POSITION;
+    private static final String SELECTED_KEY = "selected_position";
+
+    private boolean useTodayLayout = false;
 
 
     public ForecastFragment() {}
@@ -143,13 +149,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
         // The CursorAdapter will take data from our cursor and populate the ListView.
         adapter = new ForecastAdapter(getActivity(), null, 0);
+        adapter.setUseTodayLayout(this.isUseTodayLayout());
 
         //Obtem a View da lista ListView e insere o adapter criado
-        ListView lw = (ListView) rootView.findViewById(R.id.listview_forecast);
-        lw.setAdapter(adapter);
+        mListView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        mListView.setAdapter(adapter);
 
-
-        lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView adapterView, View view, int position, long l) {
@@ -164,10 +170,32 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                                     locationSetting, cursor.getLong(COL_WEATHER_DATE))
                     );
                 }
+                mPositionSelected = position;
             }
         });
 
+
+        // If there's instance state, mine it for useful information.
+        // The end-goal here is that the user never knows that turning their device sideways
+        // does crazy lifecycle related things.  It should feel like some stuff stretched out,
+        // or magically appeared to take advantage of room, but data or place in the app was never
+        // actually *lost*.
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            // The listview probably hasn't even been populated yet.  Actually perform the
+            // swapout in onLoadFinished.
+            mPositionSelected = savedInstanceState.getInt(SELECTED_KEY);
+        }
+
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        if (mPositionSelected != ListView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPositionSelected);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -224,6 +252,11 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         adapter.swapCursor(cursor);
+
+        if (mPositionSelected != ListView.INVALID_POSITION) {
+            // If we don't need to restart the loader, and there's a desired position to restore to, do so now.
+            mListView.smoothScrollToPosition(mPositionSelected);
+        }
     }
 
     @Override
@@ -244,4 +277,23 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
          */
         public void onItemSelected(Uri dateUri);
     }
+
+
+
+
+
+
+    //--------Getter&Setter--------------/
+    public boolean isUseTodayLayout() {
+        return useTodayLayout;
+    }
+
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        this.useTodayLayout = useTodayLayout;
+
+        if (adapter != null) {
+            adapter.setUseTodayLayout(isUseTodayLayout());
+        }
+    }
+    //--------/Getter&Setter--------------/
 }

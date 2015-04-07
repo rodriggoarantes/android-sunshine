@@ -25,6 +25,8 @@ public class ForecastAdapter extends CursorAdapter {
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
     private static final int VIEW_TYPE_COUNT = 2;
 
+    private boolean useTodayLayout;
+
     /**
      * Construtor
      * @param context
@@ -37,7 +39,7 @@ public class ForecastAdapter extends CursorAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return (position == 0) ? VIEW_TYPE_TODAY : VIEW_TYPE_FUTURE_DAY;
+        return (position == 0 && isUseTodayLayout()) ? VIEW_TYPE_TODAY : VIEW_TYPE_FUTURE_DAY;
     }
 
     @Override
@@ -111,6 +113,7 @@ public class ForecastAdapter extends CursorAdapter {
 
 
 
+    //---------INNER CLASS---------------//
     public static class ViewHolder {
         public final ImageView iconView;
         public final TextView dateView;
@@ -126,4 +129,18 @@ public class ForecastAdapter extends CursorAdapter {
             lowTempView = (TextView) v.findViewById(R.id.list_item_lower_textview);
         }
     }
+    //---------/INNER CLASS---------------//
+
+
+
+
+    //---------getter and setter---------------//
+    public boolean isUseTodayLayout() {
+        return useTodayLayout;
+    }
+
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        this.useTodayLayout = useTodayLayout;
+    }
+    //---------/getter and setter---------------//
 }
