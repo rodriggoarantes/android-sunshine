@@ -96,6 +96,7 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             }
         } else {
             mTwoPane = false;
+            getSupportActionBar().setElevation(0f);
         }
 
         //Obter o fragmento para setar se o fragmento é de dois paineis ou somente um

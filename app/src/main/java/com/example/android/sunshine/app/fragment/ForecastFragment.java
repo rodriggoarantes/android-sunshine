@@ -186,6 +186,8 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             mPositionSelected = savedInstanceState.getInt(SELECTED_KEY);
         }
 
+        adapter.setUseTodayLayout(useTodayLayout);
+
         return rootView;
     }
 
@@ -241,6 +243,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
         // Sort order:  Ascending, by date.
         String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
+
         Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
                 locationSetting, System.currentTimeMillis());
 
@@ -292,7 +295,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         this.useTodayLayout = useTodayLayout;
 
         if (adapter != null) {
-            adapter.setUseTodayLayout(isUseTodayLayout());
+            adapter.setUseTodayLayout(this.useTodayLayout);
         }
     }
     //--------/Getter&Setter--------------/

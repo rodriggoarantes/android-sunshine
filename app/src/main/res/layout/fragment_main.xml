@@ -3,17 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.sunshine.app.activity.MainActivity$PlaceholderFragment">
+    tools:context="com.example.android.sunshine.app.fragment.ForecastFragment">
 
     <ListView
         android:id="@+id/listview_forecast"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/ForecastListStyle">
-    </ListView>
+        style="@style/ForecastListStyle"
+        android:divider="@null" />
 
 </FrameLayout>
